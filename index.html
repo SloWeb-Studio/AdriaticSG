@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adriatic Sports Getaways — Padel & Pilates Summer Camp</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --limestone: #F6F0E4;
+  --limestone-dark: #EDE3CC;
+  --deep-blue: #1A3A5C;
+  --mid-blue: #2E6B8A;
+  --aqua: #4BAFC2;
+  --coral: #D9552A;
+  --coral-light: #F0794F;
+  --olive: #6B7A4A;
+  --sand: #C9AA7C;
+  --text-dark: #1C2B1A;
+  --text-mid: #4A5240;
+  --text-light: #7A8070;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--limestone); color: var(--text-dark); overflow-x: hidden; }
+.page { display: none; }
+.page.active { display: block; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5rem; height: 72px;
+  background: rgba(246,240,228,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(26,58,92,0.1);
+}
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--deep-blue); letter-spacing: 0.02em; line-height: 1.2; cursor: pointer; }
+.nav-logo span { color: var(--coral); }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-links a { font-size: 0.77rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--text-mid); transition: color 0.2s; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { color: var(--deep-blue); }
+.nav-cta { background: var(--coral); color: #fff; font-size: 0.77rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 0.6rem 1.4rem; border-radius: 2px; cursor: pointer; transition: background 0.2s; }
+.nav-cta:hover { background: var(--coral-light); }
+.nav-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-light); flex-wrap: wrap; }
+.nav-breadcrumb span { cursor: pointer; transition: color 0.2s; }
+.nav-breadcrumb span:hover { color: var(--deep-blue); }
+.nav-breadcrumb .sep { opacity: 0.4; cursor: default; }
+.nav-breadcrumb .current { color: var(--text-dark); font-weight: 500; cursor: default; }
+
+/* HOME */
+.home-hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 72px; }
+.home-hero-left { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 5rem; }
+.eyebrow { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--coral); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.eyebrow::before { content: ''; display: block; width: 36px; height: 1px; background: var(--coral); }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); font-weight: 300; line-height: 1.05; color: var(--deep-blue); margin-bottom: 1.6rem; }
+.hero-title em { font-style: italic; color: var(--coral); }
+.hero-sub { font-size: 0.97rem; font-weight: 300; line-height: 1.75; color: var(--text-mid); max-width: 440px; margin-bottom: 2.5rem; }
+.btn-primary { display: inline-block; background: var(--deep-blue); color: #fff; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.2rem; border-radius: 2px; cursor: pointer; transition: background 0.2s, transform 0.15s; border: none; }
+.btn-primary:hover { background: var(--mid-blue); transform: translateY(-2px); }
+.btn-coral { display: inline-block; background: var(--coral); color: #fff; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.2rem; border-radius: 2px; cursor: pointer; transition: background 0.2s; border: none; }
+.btn-coral:hover { background: var(--coral-light); }
+.hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid rgba(26,58,92,0.12); }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--deep-blue); line-height: 1; }
+.stat-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-top: 0.3rem; }
+.home-hero-right { position: relative; overflow: hidden; }
+.hero-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(26,58,92,0.5) 100%); }
+.hero-img-tags { position: absolute; bottom: 3rem; left: 2.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.5rem 1rem; border-radius: 2px; display: flex; align-items: center; gap: 0.6rem; width: fit-content; }
+.tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--coral-light); flex-shrink: 0; }
+.intro-strip { background: var(--deep-blue); padding: 2rem 5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.intro-strip-q { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.8); max-width: 600px; }
+.intro-strip-d { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.1; color: var(--deep-blue); }
+.section-title em { font-style: italic; }
+
+/* CAMP CATEGORY CARDS */
+.camp-cat-card { position: relative; overflow: hidden; cursor: pointer; border-radius: 3px; aspect-ratio: 16/9; }
+.camp-cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+.camp-cat-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.68) 100%); transition: opacity 0.3s; }
+.camp-cat-card:hover img { transform: scale(1.04); }
+.camp-cat-card:hover::after { opacity: 0.85; }
+.camp-cat-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 2rem 2rem 2.2rem; }
+.camp-cat-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+.camp-cat-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 0.7rem; }
+.camp-cat-dates { font-size: 0.82rem; font-weight: 300; color: rgba(255,255,255,0.75); margin-bottom: 1.2rem; }
+.camp-cat-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.55rem 1.2rem; border-radius: 2px; transition: background 0.2s; }
+.camp-cat-btn:hover { background: rgba(255,255,255,0.28); }
+
+/* CAMPS PAGE */
+.camps-hero { background: var(--deep-blue); padding: 5rem 5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.camps-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: 1.2rem; }
+.camps-hero-title em { font-style: italic; color: var(--aqua); }
+.camps-hero-text { font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.65); }
+.camps-hero-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.camps-hero-pill { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 3px; padding: 1.2rem 1.4rem; }
+.pill-icon { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.pill-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.2rem; }
+.pill-value { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.8); }
+
+/* DATES PAGE */
+.dates-hero { position: relative; height: 360px; overflow: hidden; }
+.dates-hero img { width: 100%; height: 100%; object-fit: cover; }
+.dates-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,58,92,0.3) 0%, rgba(26,58,92,0.82) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem 5rem; }
+.dates-hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.7rem; }
+.dates-hero-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: #fff; line-height: 1.1; }
+.dates-hero-title em { font-style: italic; }
+.dates-hero-sub { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.7); margin-top: 0.6rem; }
+.dates-intro-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(26,58,92,0.1); }
+.dates-description { font-size: 0.95rem; font-weight: 300; line-height: 1.75; color: var(--text-mid); }
+.include-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1rem; }
+.include-list li { font-size: 0.85rem; font-weight: 300; color: var(--text-mid); display: flex; align-items: center; gap: 0.8rem; }
+.include-list li::before { content: ''; width: 18px; height: 1px; background: var(--coral); flex-shrink: 0; }
+.dates-grid-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--deep-blue); margin-bottom: 2rem; }
+.dates-grid-title em { font-style: italic; }
+.dates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+/* SESSION CARD */
+.session-card { position: relative; overflow: hidden; cursor: pointer; border-radius: 3px; aspect-ratio: 3/4; }
+.session-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+.session-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,0.78) 100%); }
+.session-card:hover img { transform: scale(1.05); }
+.session-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 1.5rem 1.5rem 1.8rem; }
+.session-dates-badge { display: inline-block; background: var(--coral); color: #fff; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 0.7rem; }
+.session-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 0.5rem; }
+.session-spots { font-size: 0.75rem; font-weight: 300; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+.session-price strong { font-size: 1.3rem; font-family: 'Cormorant Garamond', serif; font-weight: 300; color: #fff; }
+.session-price span { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+.session-cta { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.9rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.5rem 1rem; border-radius: 2px; transition: background 0.2s; }
+.session-cta:hover { background: rgba(255,255,255,0.28); }
+.sold-out-badge { position: absolute; top: 1rem; right: 1rem; z-index: 3; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 2px; }
+
+/* DETAIL PAGE */
+.detail-hero { position: relative; height: 55vh; overflow: hidden; min-height: 360px; }
+.detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+.detail-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,58,92,0.2) 0%, rgba(26,58,92,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 3.5rem 5rem; }
+.detail-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.6rem; }
+.detail-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; color: #fff; line-height: 1.05; }
+.detail-title em { font-style: italic; }
+.detail-dates-bar { display: flex; align-items: center; gap: 2rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.detail-dates-bar span { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.75); }
+.detail-content { display: grid; grid-template-columns: 1fr 380px; gap: 4rem; padding: 4rem 5rem; align-items: start; }
+.detail-section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--deep-blue); margin-bottom: 1rem; }
+.detail-section-title em { font-style: italic; }
+.detail-text { font-size: 0.92rem; font-weight: 300; line-height: 1.75; color: var(--text-mid); margin-bottom: 2.5rem; }
+.schedule-block { background: #fff; border: 1px solid rgba(26,58,92,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 2.5rem; }
+.schedule-row { display: grid; grid-template-columns: 100px 1fr; border-bottom: 1px solid rgba(26,58,92,0.07); }
+.schedule-row:last-child { border-bottom: none; }
+.srow-time { background: var(--limestone-dark); padding: 1rem 1.2rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; color: var(--deep-blue); display: flex; align-items: center; border-right: 1px solid rgba(26,58,92,0.07); }
+.srow-content { padding: 1rem 1.4rem; }
+.srow-name { font-size: 0.88rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.15rem; }
+.srow-desc { font-size: 0.78rem; font-weight: 300; color: var(--text-light); }
+.srow-padel { border-left: 3px solid var(--aqua); }
+.srow-pilates { border-left: 3px solid var(--olive); }
+.srow-free { border-left: 3px solid var(--sand); }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 2.5rem; }
+.gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 2px; }
+.gallery-grid .tall { aspect-ratio: 3/4; grid-row: span 2; }
+.booking-sidebar { position: sticky; top: 100px; background: #fff; border: 1px solid rgba(26,58,92,0.12); border-radius: 3px; overflow: hidden; }
+.booking-sidebar-header { background: var(--deep-blue); padding: 1.8rem 2rem; }
+.booking-sidebar-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: #fff; margin-bottom: 0.2rem; }
+.booking-sidebar-header p { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.6); }
+.price-from { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 1rem; }
+.price-amount { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: #fff; line-height: 1; }
+.price-per { font-size: 0.75rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 0.3rem; }
+.booking-form { padding: 1.8rem 2rem; }
+.form-group { margin-bottom: 1.1rem; }
+.form-group label { display: block; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.4rem; }
+.form-group input, .form-group select { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid rgba(26,58,92,0.15); border-radius: 2px; font-size: 0.88rem; font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--limestone); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+.form-group input:focus, .form-group select:focus { border-color: var(--deep-blue); }
+.form-group input::placeholder { color: var(--text-light); }
+.btn-book { width: 100%; background: var(--coral); color: #fff; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border: none; padding: 1.1rem; border-radius: 2px; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+.btn-book:hover { background: var(--coral-light); }
+.booking-note { font-size: 0.72rem; color: var(--text-light); text-align: center; margin-top: 0.8rem; line-height: 1.5; }
+.booking-features { padding: 1.4rem 2rem; border-top: 1px solid rgba(26,58,92,0.08); display: flex; flex-direction: column; gap: 0.7rem; }
+.booking-feat { display: flex; align-items: center; gap: 0.7rem; font-size: 0.8rem; font-weight: 300; color: var(--text-mid); }
+.feat-dot { width: 14px; height: 14px; border-radius: 50%; background: #EFF5E8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.6rem; }
+
+footer { background: var(--text-dark); padding: 3rem 5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: rgba(255,255,255,0.7); }
+.footer-logo span { color: var(--coral-light); }
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
+.img-ph { background: linear-gradient(135deg, var(--mid-blue), var(--deep-blue)); width: 100%; height: 100%; }
+.img-ph-green { background: linear-gradient(135deg, #6B7A4A, #3d4f26); }
+.img-ph-aqua { background: linear-gradient(135deg, var(--aqua), var(--mid-blue)); }
+.img-ph-warm { background: linear-gradient(135deg, #c9884a, #8a5220); }
+
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .home-hero { grid-template-columns: 1fr; }
+  .home-hero-right { height: 60vw; }
+  .home-hero-left { padding: 4rem 2rem; }
+  .intro-strip { padding: 2rem; }
+  .camps-hero { grid-template-columns: 1fr; padding: 3rem 2rem; }
+  .camps-hero-right { grid-template-columns: 1fr 1fr; }
+  .dates-hero-overlay, .detail-hero-overlay { padding: 2rem; }
+  .dates-grid { grid-template-columns: 1fr 1fr; }
+  .dates-intro-row { grid-template-columns: 1fr; }
+  .dates-content, .detail-content { padding: 3rem 2rem; }
+  .detail-content { grid-template-columns: 1fr; }
+  footer { padding: 2rem; flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo" onclick="goHome()">Adriatic<br><span>Sports Getaways</span></div>
+  <ul class="nav-links" id="nav-links">
+    <li><a onclick="goHome()" data-page="home">Home</a></li>
+    <li><a onclick="showPage('camps')" data-page="camps">Camps</a></li>
+    <li><a onclick="gotoSection('about')">About</a></li>
+    <li><a onclick="gotoSection('contact')">Contact</a></li>
+  </ul>
+  <div id="nav-bc" class="nav-breadcrumb" style="display:none">
+    <span onclick="goHome()">Home</span>
+    <span class="sep">›</span>
+    <span onclick="showPage('camps')">Camps</span>
+    <span id="bc-sep1" class="sep" style="display:none">›</span>
+    <span id="bc-cat" style="display:none" onclick="backToDates()"></span>
+    <span id="bc-sep2" class="sep" style="display:none">›</span>
+    <span id="bc-session" class="current" style="display:none"></span>
+  </div>
+  <span class="nav-cta" onclick="showPage('camps')">View Camps</span>
+</nav>
+
+<!-- ===== HOME ===== -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <div class="home-hero-left">
+      <p class="eyebrow">Summer 2025 · Adults Only · Novalja, Croatia</p>
+      <h1 class="hero-title">Sweat.<br><em>Stretch.</em><br>Adriatic.</h1>
+      <p class="hero-sub">A week of padel courts and pilates sessions on the crystal shores of Novalja — where sport meets the sea and every sunset earns its place.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <button class="btn-primary" onclick="showPage('camps')">Explore All Camps</button>
+        <button class="btn-coral" onclick="gotoSection('about')">Learn More</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">7</div><div class="stat-label">Days per session</div></div>
+        <div><div class="stat-num">20</div><div class="stat-label">Max guests</div></div>
+        <div><div class="stat-num">8+</div><div class="stat-label">Sessions 2025</div></div>
+      </div>
+    </div>
+    <div class="home-hero-right">
+      <img id="hero-main-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80&fit=crop" alt="Adriatic" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';document.getElementById('hero-ph').style.display='block'">
+      <div id="hero-ph" class="img-ph" style="display:none;position:absolute;inset:0"></div>
+      <div class="hero-img-overlay"></div>
+      <div class="hero-img-tags">
+        <div class="hero-tag"><span class="tag-dot"></span>Padel Training &amp; Match Play</div>
+        <div class="hero-tag"><span class="tag-dot"></span>Morning Pilates by the Sea</div>
+        <div class="hero-tag"><span class="tag-dot"></span>Camp Straško, Novalja</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-strip">
+    <p class="intro-strip-q">"Where two disciplines meet the Adriatic — and your best week begins."</p>
+    <div class="intro-strip-d">Camp Straško · Novalja<br>Island of Pag, Croatia</div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about" style="padding:6rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
+    <div>
+      <p class="eyebrow">About the Camp</p>
+      <h2 class="section-title">Two sports.<br>One <em>perfect</em> week.</h2>
+      <p style="font-size:0.95rem;font-weight:300;line-height:1.75;color:var(--text-mid);margin-top:1.2rem;max-width:480px">Adriatic Sports Getaways combines daily padel coaching with morning pilates sessions, set against the clearest water in the Mediterranean. Whether you're a complete beginner or a seasoned player, our certified coaches tailor every session to your level.</p>
+      <p style="font-size:0.95rem;font-weight:300;line-height:1.75;color:var(--text-mid);margin-top:1rem;max-width:480px">Camp Straško in Novalja is one of the Adriatic's most beloved coastal retreats — pine trees, white stone, and sea just steps from your accommodation.</p>
+      <button class="btn-primary" style="margin-top:2rem" onclick="showPage('camps')">See All Camps →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=500&q=80&fit=crop" alt="Padel" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:3px" onerror="this.style.background='linear-gradient(135deg,#2E6B8A,#1A3A5C)';this.removeAttribute('src')">
+      <div style="display:flex;flex-direction:column;gap:1rem;margin-top:2rem">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80&fit=crop" alt="Pilates" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px" onerror="this.style.background='linear-gradient(135deg,#6B7A4A,#3d4f26)';this.removeAttribute('src')">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80&fit=crop" alt="Coast" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px" onerror="this.style.background='linear-gradient(135deg,#4BAFC2,#2E6B8A)';this.removeAttribute('src')">
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMP PREVIEW -->
+  <div style="padding:5rem 5rem;background:var(--limestone-dark)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem">
+      <div><p class="eyebrow">Our Camps</p><h2 class="section-title">Choose your <em>level</em></h2></div>
+      <button class="btn-primary" onclick="showPage('camps')">View all dates →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div class="camp-cat-card" onclick="loadDates('everyone')">
+        <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=800&q=80&fit=crop" alt="For Everyone" onerror="this.style.display='none'">
+        <div class="camp-cat-info">
+          <p class="camp-cat-label">Open to all levels</p>
+          <h3 class="camp-cat-title">Padel & Pilates<br>for Everyone</h3>
+          <p class="camp-cat-dates">June – September 2025 · Multiple dates</p>
+          <div class="camp-cat-btn">View dates →</div>
+        </div>
+      </div>
+      <div class="camp-cat-card" onclick="loadDates('advanced')">
+        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80&fit=crop" alt="Advanced" onerror="this.style.display='none'">
+        <div class="img-ph img-ph-green" style="position:absolute;inset:0;z-index:-1"></div>
+        <div class="camp-cat-info">
+          <p class="camp-cat-label">Intermediate &amp; Advanced</p>
+          <h3 class="camp-cat-title">Padel & Pilates<br>Advanced</h3>
+          <p class="camp-cat-dates">July – August 2025 · Limited spots</p>
+          <div class="camp-cat-btn">View dates →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" style="padding:6rem 5rem;background:var(--limestone);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+    <div>
+      <p class="eyebrow">Get in Touch</p>
+      <h2 class="section-title"><em>Questions?</em><br>We're here.</h2>
+      <p style="font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--text-mid);margin-top:1rem;max-width:400px">Not sure which camp suits you? Drop us a message and we'll help you choose the perfect week.</p>
+      <div style="margin-top:2rem;display:flex;flex-direction:column;gap:0.9rem">
+        <div style="font-size:0.85rem;color:var(--text-mid)"><strong style="color:var(--deep-blue)">Email:</strong> info@adriaticsportsgetaways.com</div>
+        <div style="font-size:0.85rem;color:var(--text-mid)"><strong style="color:var(--deep-blue)">Instagram:</strong> @adriaticsportsgetaways</div>
+        <div style="font-size:0.85rem;color:var(--text-mid)"><strong style="color:var(--deep-blue)">Location:</strong> Camp Straško, Novalja, Island of Pag</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(26,58,92,0.1);border-radius:3px;padding:2.5rem">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--deep-blue);margin-bottom:1.5rem">Send a message</h3>
+      <div style="margin-bottom:1rem"><label style="display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.4rem">Name</label><input type="text" placeholder="Your name" style="width:100%;padding:0.75rem;border:1px solid rgba(26,58,92,0.15);border-radius:2px;font-size:0.88rem;background:var(--limestone);outline:none;font-family:inherit"></div>
+      <div style="margin-bottom:1rem"><label style="display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.4rem">Email</label><input type="email" placeholder="you@email.com" style="width:100%;padding:0.75rem;border:1px solid rgba(26,58,92,0.15);border-radius:2px;font-size:0.88rem;background:var(--limestone);outline:none;font-family:inherit"></div>
+      <div style="margin-bottom:1.2rem"><label style="display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.4rem">Message</label><textarea rows="3" placeholder="Which camp are you interested in?" style="width:100%;padding:0.75rem;border:1px solid rgba(26,58,92,0.15);border-radius:2px;font-size:0.88rem;background:var(--limestone);outline:none;font-family:inherit;resize:vertical"></textarea></div>
+      <button class="btn-coral" style="width:100%" onclick="alert('Message sent! We\'ll reply within 24 hours.')">Send Message</button>
+    </div>
+  </div>
+  <footer><div class="footer-logo">Adriatic <span>Sports Getaways</span></div><ul class="footer-links"><li><a onclick="showPage('camps')">Camps</a></li><li><a onclick="gotoSection('about')">About</a></li><li><a onclick="gotoSection('contact')">Contact</a></li></ul><p class="footer-copy">© 2025 Adriatic Sports Getaways · Novalja, Croatia</p></footer>
+</div>
+
+<!-- ===== CAMPS ===== -->
+<div id="page-camps" class="page">
+  <div style="padding-top:72px">
+    <div class="camps-hero">
+      <div>
+        <p class="eyebrow" style="color:var(--aqua)">Summer 2025</p>
+        <h1 class="camps-hero-title">Choose your<br><em>perfect camp</em></h1>
+        <p class="camps-hero-text">Two disciplines, two levels — find the week that matches your game and your goals. All camps take place at Camp Straško on the Adriatic island of Pag.</p>
+      </div>
+      <div class="camps-hero-right">
+        <div class="camps-hero-pill"><div class="pill-icon">🎾</div><div class="pill-label">Sport</div><div class="pill-value">Padel + Pilates</div></div>
+        <div class="camps-hero-pill"><div class="pill-icon">📍</div><div class="pill-label">Location</div><div class="pill-value">Novalja, Croatia</div></div>
+        <div class="camps-hero-pill"><div class="pill-icon">🌊</div><div class="pill-label">Setting</div><div class="pill-value">Adriatic waterfront</div></div>
+        <div class="camps-hero-pill"><div class="pill-icon">👥</div><div class="pill-label">Group size</div><div class="pill-value">Max 20 guests</div></div>
+      </div>
+    </div>
+    <div style="padding:4.5rem 5rem">
+      <p class="eyebrow">All Programmes</p>
+      <h2 class="section-title" style="margin-bottom:0.6rem">Select a <em>camp type</em></h2>
+      <p style="font-size:0.9rem;font-weight:300;color:var(--text-mid);margin-bottom:3rem">Click on a camp to see all available dates.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="camp-cat-card" onclick="loadDates('everyone')">
+          <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=900&q=80&fit=crop" alt="For Everyone" onerror="this.style.display='none'">
+          <div class="camp-cat-info">
+            <p class="camp-cat-label">All levels welcome · Beginners to intermediate</p>
+            <h3 class="camp-cat-title">Padel & Pilates for Everyone</h3>
+            <p class="camp-cat-dates">June – September 2025 · From €890 per person</p>
+            <div class="camp-cat-btn">View all dates →</div>
+          </div>
+        </div>
+        <div class="camp-cat-card" onclick="loadDates('advanced')">
+          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=900&q=80&fit=crop" alt="Advanced" onerror="this.style.display='none'">
+          <div class="img-ph img-ph-green" style="position:absolute;inset:0;z-index:-1"></div>
+          <div class="camp-cat-info">
+            <p class="camp-cat-label">Intermediate &amp; Advanced · Competitive players</p>
+            <h3 class="camp-cat-title">Padel & Pilates Advanced</h3>
+            <p class="camp-cat-dates">July – August 2025 · From €990 per person · Limited spots</p>
+            <div class="camp-cat-btn">View all dates →</div>
+          </div>
+        </div>
+      </div>
+      <!-- Includes -->
+      <div style="margin-top:5rem;padding-top:4rem;border-top:1px solid rgba(26,58,92,0.1)">
+        <p class="eyebrow">Included in all camps</p>
+        <h2 class="section-title" style="margin-bottom:2.5rem">Everything <em>arranged</em></h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">🎾</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">All Sessions</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">Daily padel coaching and pilates classes. All equipment provided.</p></div>
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">🏕️</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">Accommodation</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">7 nights at Camp Straško in sea-view bungalows or glamping tents.</p></div>
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">🍳</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">Daily Breakfast</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">Full Croatian breakfast each morning. Dietary options on request.</p></div>
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">🚌</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">Transfers</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">Return group transfer from Zadar or Zagreb to Camp Straško.</p></div>
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">📋</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">Welcome Pack</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">Programme booklet, branded kit bag and Novalja guide.</p></div>
+          <div style="background:#fff;border:1px solid rgba(26,58,92,0.08);border-radius:3px;padding:2rem"><div style="font-size:1.4rem;margin-bottom:1rem">🌊</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">Free Time</h4><p style="font-size:0.83rem;font-weight:300;line-height:1.65;color:var(--text-mid)">Afternoons free to swim, explore Novalja or simply relax.</p></div>
+        </div>
+      </div>
+    </div>
+    <footer><div class="footer-logo">Adriatic <span>Sports Getaways</span></div><ul class="footer-links"><li><a onclick="goHome()">Home</a></li><li><a onclick="gotoSection('contact')">Contact</a></li></ul><p class="footer-copy">© 2025 Adriatic Sports Getaways · Novalja, Croatia</p></footer>
+  </div>
+</div>
+
+<!-- ===== DATES ===== -->
+<div id="page-dates" class="page">
+  <div style="padding-top:72px">
+    <div class="dates-hero">
+      <img id="d-hero-img" src="" alt="" onerror="this.style.display='none';document.getElementById('d-hero-ph').style.display='block'">
+      <div id="d-hero-ph" class="img-ph" style="display:none;height:100%"></div>
+      <div class="dates-hero-overlay">
+        <p class="dates-hero-eyebrow" id="d-eyebrow"></p>
+        <h1 class="dates-hero-title" id="d-title"></h1>
+        <p class="dates-hero-sub" id="d-sub"></p>
+      </div>
+    </div>
+    <div style="padding:4rem 5rem">
+      <div class="dates-intro-row">
+        <p class="dates-description" id="d-desc"></p>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--deep-blue);margin-bottom:0.5rem">What's included</h3>
+          <ul class="include-list" id="d-includes"></ul>
+        </div>
+      </div>
+      <h2 class="dates-grid-title">Choose your <em>dates</em></h2>
+      <div class="dates-grid" id="d-grid"></div>
+    </div>
+    <footer><div class="footer-logo">Adriatic <span>Sports Getaways</span></div><ul class="footer-links"><li><a onclick="goHome()">Home</a></li><li><a onclick="showPage('camps')">All Camps</a></li></ul><p class="footer-copy">© 2025 Adriatic Sports Getaways · Novalja, Croatia</p></footer>
+  </div>
+</div>
+
+<!-- ===== DETAIL ===== -->
+<div id="page-detail" class="page">
+  <div style="padding-top:72px">
+    <div class="detail-hero">
+      <img id="det-img" src="" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';document.getElementById('det-ph').style.display='block'">
+      <div id="det-ph" class="img-ph" style="display:none;height:100%"></div>
+      <div class="detail-hero-overlay">
+        <p class="detail-eyebrow" id="det-eyebrow"></p>
+        <h1 class="detail-title" id="det-title"></h1>
+        <div class="detail-dates-bar">
+          <span id="det-dates">📅 <span id="det-dates-txt"></span></span>
+          <span>⏱ 7 nights</span>
+          <span>📍 Novalja, Croatia</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-content">
+      <div>
+        <h2 class="detail-section-title">About <em>this camp</em></h2>
+        <p class="detail-text" id="det-about"></p>
+        <h2 class="detail-section-title">Daily <em>programme</em></h2>
+        <div class="schedule-block">
+          <div class="schedule-row"><div class="srow-time">07:00</div><div class="srow-content srow-pilates"><div class="srow-name">Sunrise Pilates</div><div class="srow-desc">Mat pilates by the waterfront · All levels</div></div></div>
+          <div class="schedule-row"><div class="srow-time">09:00</div><div class="srow-content srow-free"><div class="srow-name">Breakfast</div><div class="srow-desc">Full Croatian spread at the camp restaurant</div></div></div>
+          <div class="schedule-row"><div class="srow-time">10:30</div><div class="srow-content srow-free"><div class="srow-name">Free time / Sea swimming</div><div class="srow-desc">Relax on the beach or explore Novalja</div></div></div>
+          <div class="schedule-row"><div class="srow-time">11:30</div><div class="srow-content srow-padel"><div class="srow-name">Padel Session</div><div class="srow-desc">Technique, drills &amp; match play · Certified coaches</div></div></div>
+          <div class="schedule-row"><div class="srow-time">13:30</div><div class="srow-content srow-free"><div class="srow-name">Lunch &amp; Siesta</div><div class="srow-desc">Free afternoon — your time to recharge</div></div></div>
+          <div class="schedule-row"><div class="srow-time">17:00</div><div class="srow-content srow-padel"><div class="srow-name">Evening Padel / Tournament</div><div class="srow-desc">Doubles play or structured match evening</div></div></div>
+          <div class="schedule-row"><div class="srow-time">19:30</div><div class="srow-content srow-pilates"><div class="srow-name">Evening Stretch &amp; Breathwork</div><div class="srow-desc">Wind down · Cool down · Recover</div></div></div>
+        </div>
+        <h2 class="detail-section-title">Photo <em>gallery</em></h2>
+        <div class="gallery-grid">
+          <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&q=75&fit=crop" alt="Padel" onerror="this.style.background='linear-gradient(135deg,#2E6B8A,#1A3A5C)';this.removeAttribute('src')">
+          <img class="tall" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=75&fit=crop" alt="Sea" onerror="this.style.background='linear-gradient(135deg,#4BAFC2,#2E6B8A)';this.removeAttribute('src')">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=75&fit=crop" alt="Pilates" onerror="this.style.background='linear-gradient(135deg,#6B7A4A,#3d4f26)';this.removeAttribute('src')">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=75&fit=crop" alt="Croatia" onerror="this.style.background='linear-gradient(135deg,#c9884a,#7a4a20)';this.removeAttribute('src')">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=75&fit=crop" alt="Group" onerror="this.style.background='linear-gradient(135deg,#2E6B8A,#4BAFC2)';this.removeAttribute('src')">
+        </div>
+      </div>
+      <div class="booking-sidebar">
+        <div class="booking-sidebar-header">
+          <h3 id="sb-title">Reserve Your Place</h3>
+          <p id="sb-dates"></p>
+          <div class="price-from">from</div>
+          <div><span class="price-amount" id="sb-price">€890</span><span class="price-per">/ person</span></div>
+        </div>
+        <div class="booking-form">
+          <div class="form-group"><label>First name</label><input type="text" placeholder="Your name"></div>
+          <div class="form-group"><label>Last name</label><input type="text" placeholder="Surname"></div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label>Guests</label><select><option>1 person</option><option>2 people</option><option>3 people</option><option>4 people</option></select></div>
+          <div class="form-group"><label>Level</label><select><option>Complete beginner</option><option>Some experience</option><option>Intermediate</option><option>Advanced</option></select></div>
+          <button class="btn-book" onclick="alert('Enquiry sent! We\'ll confirm availability within 24 hours.')">Reserve My Place →</button>
+          <p class="booking-note">No payment required now. We confirm availability and send full details.</p>
+        </div>
+        <div class="booking-features">
+          <div class="booking-feat"><div class="feat-dot">✓</div>Free cancellation up to 30 days</div>
+          <div class="booking-feat"><div class="feat-dot">✓</div>All sessions &amp; equipment included</div>
+          <div class="booking-feat"><div class="feat-dot">✓</div>Max 20 guests per session</div>
+          <div class="booking-feat"><div class="feat-dot">✓</div>24/7 on-site support</div>
+        </div>
+      </div>
+    </div>
+    <footer><div class="footer-logo">Adriatic <span>Sports Getaways</span></div><ul class="footer-links"><li><a onclick="goHome()">Home</a></li><li><a onclick="showPage('camps')">All Camps</a></li></ul><p class="footer-copy">© 2025 Adriatic Sports Getaways · Novalja, Croatia</p></footer>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  everyone: {
+    eyebrow: 'All levels welcome · Open to beginners',
+    title: 'Padel & Pilates<br><em>for Everyone</em>',
+    sub: 'From complete beginners to intermediate players — a week for everyone.',
+    heroImg: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=1400&q=80&fit=crop',
+    heroBg: 'linear-gradient(135deg,#2E6B8A,#1A3A5C)',
+    desc: "Our flagship camp is designed for adults of all levels — whether you've never touched a padel racket or you play social doubles on weekends. Morning pilates sessions build the core strength and body awareness that makes every sport better, while afternoon padel coaching takes you from first rallies to competitive doubles play. The week is structured, social, and set on one of the most beautiful coastlines in Europe.",
+    includes: ['Daily padel coaching with certified instructors','Morning & evening pilates sessions','7 nights at Camp Straško','Daily breakfast','Return group transfer from Zadar/Zagreb','Equipment & mats provided','Welcome pack & Novalja guide'],
+    sessions: [
+      { id:'e1', name:'Early Summer Session', dates:'7 – 14 June 2025', price:'€890', img:'https://images.unsplash.com/photo-1565992441121-4367a2c3b64a?w=600&q=75&fit=crop', spots:'6 spots left', sold:false },
+      { id:'e2', name:'Midsummer Session I', dates:'5 – 12 July 2025', price:'€940', img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=75&fit=crop', spots:'4 spots left', sold:false },
+      { id:'e3', name:'Midsummer Session II', dates:'19 – 26 July 2025', price:'€940', img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=75&fit=crop', spots:'Fully booked', sold:true },
+      { id:'e4', name:'August Session I', dates:'2 – 9 Aug 2025', price:'€960', img:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=75&fit=crop', spots:'8 spots left', sold:false },
+      { id:'e5', name:'August Session II', dates:'16 – 23 Aug 2025', price:'€960', img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=75&fit=crop', spots:'12 spots left', sold:false },
+      { id:'e6', name:'Late Summer Session', dates:'6 – 13 Sep 2025', price:'€890', img:'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&q=75&fit=crop', spots:'14 spots left', sold:false }
+    ]
+  },
+  advanced: {
+    eyebrow: 'Intermediate & Advanced · Competitive players',
+    title: 'Padel & Pilates<br><em>Advanced</em>',
+    sub: 'For players who want to sharpen their game and deepen their practice.',
+    heroImg: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1400&q=80&fit=crop',
+    heroBg: 'linear-gradient(135deg,#6B7A4A,#3d4f26)',
+    desc: "The Advanced programme is designed for intermediate and experienced padel players who want to take their game seriously. Expect higher-intensity technical sessions, tactical match analysis, video review, and structured tournament play. The pilates component is tailored to padel's specific demands — hip mobility, rotational power, shoulder stability, and injury prevention. Small groups ensure maximum court time and personal coaching attention.",
+    includes: ['Advanced padel coaching — technique, tactics, video analysis','Sport-specific pilates — power, mobility, recovery','7 nights at Camp Straško','Daily breakfast','Return group transfer from Zadar/Zagreb','Tournament play & rankings','Max 12 guests per session'],
+    sessions: [
+      { id:'a1', name:'Advanced Session I', dates:'12 – 19 July 2025', price:'€990', img:'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=600&q=75&fit=crop', spots:'3 spots left', sold:false },
+      { id:'a2', name:'Advanced Session II', dates:'26 Jul – 2 Aug 2025', price:'€990', img:'https://images.unsplash.com/photo-1565992441121-4367a2c3b64a?w=600&q=75&fit=crop', spots:'Fully booked', sold:true },
+      { id:'a3', name:'Elite August Session', dates:'9 – 16 Aug 2025', price:'€1,050', img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=75&fit=crop', spots:'7 spots left', sold:false }
+    ]
+  }
+};
+
+let curCat = 'everyone', curSession = null;
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateNav(id);
+}
+
+function goHome() { showPage('home'); }
+
+function updateNav(id) {
+  const bc = document.getElementById('nav-bc');
+  const nl = document.getElementById('nav-links');
+  if (id === 'home') { bc.style.display='none'; nl.style.display='flex'; return; }
+  bc.style.display='flex'; nl.style.display='none';
+  const s1 = document.getElementById('bc-sep1');
+  const cat = document.getElementById('bc-cat');
+  const s2 = document.getElementById('bc-sep2');
+  const ses = document.getElementById('bc-session');
+  if (id === 'camps') { s1.style.display='none'; cat.style.display='none'; s2.style.display='none'; ses.style.display='none'; }
+  if (id === 'dates') {
+    s1.style.display='inline'; cat.style.display='inline';
+    cat.textContent = curCat === 'everyone' ? 'For Everyone' : 'Advanced';
+    s2.style.display='none'; ses.style.display='none';
+  }
+  if (id === 'detail') {
+    s1.style.display='inline'; cat.style.display='inline';
+    cat.textContent = curCat === 'everyone' ? 'For Everyone' : 'Advanced';
+    s2.style.display='inline'; ses.style.display='inline';
+    ses.textContent = curSession ? curSession.name : '';
+  }
+}
+
+function backToDates() { showPage('dates'); }
+
+function gotoSection(id) {
+  showPage('home');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+function loadDates(cat) {
+  curCat = cat;
+  const d = DATA[cat];
+  const hi = document.getElementById('d-hero-img');
+  hi.src = d.heroImg;
+  const ph = document.getElementById('d-hero-ph');
+  hi.onerror = function() { this.style.display='none'; ph.style.cssText='display:block;height:100%;background:'+d.heroBg; };
+  document.getElementById('d-eyebrow').textContent = d.eyebrow;
+  document.getElementById('d-title').innerHTML = d.title;
+  document.getElementById('d-sub').textContent = d.sub;
+  document.getElementById('d-desc').textContent = d.desc;
+  document.getElementById('d-includes').innerHTML = d.includes.map(i=>`<li>${i}</li>`).join('');
+  const phCls = cat === 'advanced' ? 'img-ph-green' : 'img-ph-aqua';
+  document.getElementById('d-grid').innerHTML = d.sessions.map(s => `
+    <div class="session-card${s.sold?' sold-out':''}" ${!s.sold?`onclick="loadDetail('${cat}','${s.id}')"`:'style="cursor:default"'}>
+      <img src="${s.img}" alt="${s.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-ph ${phCls}" style="display:none;height:100%;position:absolute;inset:0"></div>
+      ${s.sold?'<div class="sold-out-badge">Sold out</div>':''}
+      <div class="session-info">
+        <div class="session-dates-badge">${s.dates}</div>
+        <div class="session-name">${s.name}</div>
+        <div class="session-spots">${s.spots}</div>
+        <div class="session-price"><strong>${s.price}</strong> <span>/ person</span></div>
+        ${!s.sold?'<div class="session-cta">Book this week →</div>':''}
+      </div>
+    </div>
+  `).join('');
+  showPage('dates');
+}
+
+function loadDetail(cat, sid) {
+  curCat = cat;
+  const d = DATA[cat];
+  const s = d.sessions.find(x => x.id === sid);
+  curSession = s;
+  const di = document.getElementById('det-img');
+  di.src = s.img;
+  const dph = document.getElementById('det-ph');
+  di.onerror = function() { this.style.display='none'; dph.style.cssText='display:block;height:100%;background:'+d.heroBg; };
+  document.getElementById('det-eyebrow').textContent = d.eyebrow;
+  document.getElementById('det-title').innerHTML = `${s.name}<br><em>${cat==='everyone'?'For Everyone':'Advanced'}</em>`;
+  document.getElementById('det-dates-txt').textContent = s.dates;
+  document.getElementById('det-about').textContent = d.desc;
+  document.getElementById('sb-title').textContent = s.name;
+  document.getElementById('sb-dates').textContent = s.dates;
+  document.getElementById('sb-price').textContent = s.price;
+  showPage('detail');
+}
+</script>
+</body>
+</html>
